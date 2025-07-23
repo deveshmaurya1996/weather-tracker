@@ -1,29 +1,53 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
+import { ThemeProvider, useTheme } from '../hooks/useTheme';
 import { StatusBar } from 'expo-status-bar';
+import { Platform, View } from 'react-native';
 import 'react-native-reanimated';
+import { UnitsProvider } from '@/hooks/useUnits';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+// Create a separate component that can access the theme context
+function RootLayoutContent() {
+  const { colors, theme } = useTheme();
+  
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+      <StatusBar 
+        style={theme === 'dark' ? 'light' : 'dark'}
+        // backgroundColor={colors.background}
+        translucent={true}
+      />
+      <Stack
+        screenOptions={{
+          headerStyle: { 
+            backgroundColor: colors.background,
+          },
+          headerTintColor: colors.text,
+          headerTitleStyle: {
+            fontWeight: '600',
+            fontSize: 18,
+          },
+          contentStyle: { 
+            backgroundColor: colors.background 
+          },
+          headerShown: false,
+          animation: Platform.OS === 'ios' ? 'default' : 'slide_from_right',
+          presentation: 'card',
+          animationTypeForReplace: 'push',
+        }}
+      />
+    </SafeAreaView>
+  );
+}
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
-  }
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider>
+        <UnitsProvider>
+          <RootLayoutContent />
+        </UnitsProvider>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }
