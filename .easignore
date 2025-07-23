@@ -1,0 +1,67 @@
+# Node.js dependencies
+node_modules/
+
+# Expo & build artifacts
+.expo/
+.expo-shared/
+dist/
+web-build/
+build/
+
+# Android & iOS native build output
+android/app/build/
+ios/build/
+
+# Local dev & environment files
+.env
+.env.*
+.env*.local
+
+# Version control
+.git/
+.gitignore
+.easignore
+
+# Editor & system files
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# Debug & logs
+*.log
+*.tmp
+*.bak
+*.orig.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing & snapshots
+__tests__/
+coverage/
+*.test.*
+*.spec.*
+*.snap
+
+# Documentation
+*.md
+README*
+CHANGELOG*
+LICENSE*
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Security credentials
+*.jks
+*.p8
+*.p12
+*.key
+*.pem
+*.mobileprovision
+
+# Examples & demos
+example/
+examples/
+app-example/
